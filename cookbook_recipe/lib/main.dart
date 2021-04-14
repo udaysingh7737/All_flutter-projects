@@ -10,24 +10,31 @@ void main() {
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
+
   @override
   Widget build(BuildContext context) {
 
-    return ChangeNotifierProvider(
-      create: (context)=> NavItems(),
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'CookBook App',
-        theme: ThemeData(
-          appBarTheme: AppBarTheme(color: Colors.white, elevation: 0),
-          backgroundColor: Colors.white60,
-          visualDensity:  VisualDensity.adaptivePlatformDensity,
+
+    return MultiProvider(
+      providers:[
+        ChangeNotifierProvider(
+          create: (context)=> NavItems(),
+          child: MaterialApp(
+            debugShowCheckedModeBanner: false,
+            title: 'CookBook App',
+            theme: ThemeData(
+              appBarTheme: AppBarTheme(color: Colors.white, elevation: 0),
+              backgroundColor: Colors.white60,
+              visualDensity:  VisualDensity.adaptivePlatformDensity,
 
 
+            ),
+            home: HomeScreen(),
+
+          ),
         ),
-        home: HomeScreen(),
 
-      ),
+      ]
     );
   }
 }

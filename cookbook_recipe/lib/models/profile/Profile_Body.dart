@@ -1,11 +1,13 @@
 
 import 'package:cookbook_recipe/models/profile/Profile_menu_item.dart';
-import 'package:cookbook_recipe/models/profile/profile.dart';
+import 'package:cookbook_recipe/models/profile/profile_info.dart';
 import 'package:cookbook_recipe/size_config.dart';
 import 'package:flutter/material.dart';
 
 
 class Profile_Body extends StatelessWidget {
+
+
   @override
   Widget build(BuildContext context) {
     double defualtSize = SizeConfig.defaultSize;
