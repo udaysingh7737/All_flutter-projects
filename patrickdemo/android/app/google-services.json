@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "479564528049",
+    "project_id": "patrickdemo-225b2",
+    "storage_bucket": "patrickdemo-225b2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:479564528049:android:c8fd8092d77ad8c9832590",
+        "android_client_info": {
+          "package_name": "com.example.patrickdemo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "479564528049-m70rmea8hq8hjh3def547nknpgu9o3gr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDz1mgG--rH2rHc8faY6c95to3js4weOfo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "479564528049-m70rmea8hq8hjh3def547nknpgu9o3gr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

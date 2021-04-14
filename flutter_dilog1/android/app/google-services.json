@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "542078723053",
+    "project_id": "radheynaam-ac7da",
+    "storage_bucket": "radheynaam-ac7da.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:542078723053:android:716f382c0ae7cdd68efde4",
+        "android_client_info": {
+          "package_name": "com.example.flutter_dilog1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "542078723053-qoladpliblb84j77r8a42mb1rrcu5pgf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwmK_fu5x7AmEmMwAL6fMXflMfbhZEq98"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "542078723053-qoladpliblb84j77r8a42mb1rrcu5pgf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
