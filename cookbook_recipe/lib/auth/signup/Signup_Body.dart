@@ -1,3 +1,4 @@
+import 'package:cookbook_recipe/Another_auth/Sing_Up12.dart';
 import 'package:cookbook_recipe/auth/Auth_Body.dart';
 import 'package:cookbook_recipe/auth/Screen_Function/screenfunction.dart';
 import 'package:cookbook_recipe/auth/background.dart';
@@ -98,7 +99,12 @@ class Signup_Body extends StatelessWidget {
             children: <Widget>[
 
               SocialIcon( iconSrc: "assets/icons/google-plus.svg",
-                press: () {},
+                press: () {
+                  Navigator.push(
+                      context, MaterialPageRoute(
+                      builder: (context) {return Sing_up12();}
+                  ));
+                },
               ),
             ],
           ),

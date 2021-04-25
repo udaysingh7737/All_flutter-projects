@@ -1,4 +1,5 @@
 import 'package:cookbook_recipe/constants.dart';
+import 'package:cookbook_recipe/models/profile/UserInfo/User_Info.dart';
 import 'package:cookbook_recipe/size_config.dart';
 import 'package:flutter/material.dart';
 
@@ -48,11 +49,15 @@ class Info extends StatelessWidget {
                     ),
                   ),
 
-                  Text(name,
-                  style: TextStyle(
-                    fontSize: defualtSize*2.2,
-                    color: kPrimaryColor1,
-                  ),
+                  InkWell(onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => User_info()));
+                  },
+                    child: Text(name,
+                    style: TextStyle(
+                      fontSize: defualtSize*2.2,
+                      color: kPrimaryColor1,
+                    ),
+                    ),
                   ),
                   SizedBox(height: defualtSize /2),
 

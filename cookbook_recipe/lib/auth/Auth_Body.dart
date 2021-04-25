@@ -1,6 +1,6 @@
+import 'package:cookbook_recipe/Another_auth/Auth12.dart';
+import 'package:cookbook_recipe/Another_auth/SIng_Up12.dart';
 import 'package:cookbook_recipe/auth/background.dart';
-import 'package:cookbook_recipe/auth/login/LoginScreen.dart';
-import 'package:cookbook_recipe/auth/signup/Signup_Screen.dart';
 import 'package:cookbook_recipe/constants.dart';
 
 import 'package:flutter/cupertino.dart';
@@ -34,7 +34,7 @@ class Auth_Body extends StatelessWidget {
               color: kPrimaryColor2,
               press: (){
                 Navigator.push(context, MaterialPageRoute(builder: (context){
-                  return LoginScreen();
+                  return Another_auth12();
                 }
                 )
                 );
@@ -47,7 +47,7 @@ class Auth_Body extends StatelessWidget {
               textColor: Colors.black87,
               press: (){
                 Navigator.push(context, MaterialPageRoute(builder: (context){
-                  return Signup_Screen();
+                  return Sing_up12();
                 }
                 )
                 );

@@ -1,3 +1,6 @@
+import 'package:demo1/BgImage.dart';
+import 'package:demo1/NewBody.dart';
+import 'package:demo1/searchDelegets1.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -7,135 +10,82 @@ void main() {
 class myapp1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        title: "smple app",
+
+    return MaterialApp(routes: {
+      "/fon": (context)=> BgImage1(),
+    },
+        debugShowCheckedModeBanner: false,
+        title: "sample app",
         theme: ThemeData(
           primarySwatch: Colors.blueGrey,
         ),
-        home: Scaffold(
-          appBar: AppBar(
-            title: Text(
-              "sample Application",
-              style: TextStyle(fontSize: 28.0),
-            ),
-          ),
-          body: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                MaterialButton(
-                  padding: EdgeInsets.symmetric(vertical: 15, horizontal: 25.0),
-                  highlightColor: Colors.red,
-                  onPressed: () {},
-                  elevation: 13.0,
-                  splashColor: Colors.orange,
-                  child: Text(
-                    "help! me",
-                    textDirection: TextDirection.ltr,
-                    softWrap: false,
-                    maxLines: 2,
-                  ),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(50.0)),
-                ),
-                Text(
-                  "hello! welcome this is uday singh| le Application le Application le Application le Application le Application le Application le Application le Application le Application le Application ",
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    fontSize: 27,
-                  ),
-                ),
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      RaisedButton(
-                        onPressed: () {},
-                        elevation: 10.0,
-                        color: Colors.orange,
-                        highlightElevation: 40.0,
-                        child: Text(
-                          "click me",
-                          style: TextStyle(
-                              fontSize: 15.0,
-                              color: Colors.black,
-                              fontStyle: FontStyle.italic,
-                              fontWeight: FontWeight.w900,
-                              backgroundColor: Colors.green[200],
-                              wordSpacing: 20.0,
-                              fontFamily: "Times New Roman",
-                              decorationStyle: TextDecorationStyle.dashed),
-                          textAlign: TextAlign.left,
-                        ),
-                        splashColor: Colors.green,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                        ),
-                      ),
-                      RaisedButton(
-                        onPressed: () {},
-                        child: Text(
-                          "button 11",
-                          style:
-                              TextStyle(fontSize: 25.0, color: Colors.orange),
-                        ),
-                      )
-                    ]),
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: <Widget>[
-                      RaisedButton(
-                        onPressed: () {},
-                        elevation: 10.0,
-                        color: Colors.orange,
-                        highlightElevation: 40.0,
-                        child: Text(
-                          "click me",
-                          style: TextStyle(
-                              fontSize: 15.0,
-                              color: Colors.black,
-                              fontStyle: FontStyle.italic,
-                              fontWeight: FontWeight.w900,
-                              backgroundColor: Colors.green[200],
-                              wordSpacing: 20.0,
-                              fontFamily: "Times New Roman",
-                              decorationStyle: TextDecorationStyle.dashed),
-                          textAlign: TextAlign.left,
-                        ),
-                        splashColor: Colors.green,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                        ),
-                      ),
-                      RaisedButton(
-                        onPressed: () {},
-                        child: Text(
-                          "button 11",
-                          style:
-                              TextStyle(fontSize: 25.0, color: Colors.orange),
-                        ),
-                      ),
-                    ]),
-                TextField(
-                  maxLength: 20,
-                  maxLines: 1,
-                  decoration: InputDecoration(
-                    labelText: "user name",
-                  ),
-                  style: TextStyle(
-                    color: Colors.lightBlue,
-                    fontSize: 25.0,
-                  ),
-                ),
-                TextField(
-                  maxLength: 16,
-                  decoration: InputDecoration(
-                    labelText: "Password",
-                  ),
-                  style: TextStyle(
-                    color: Colors.blue,
-                    fontSize: 20.0,
-                  ),
-                )
-              ]),
-        ));
+        home: MystatefullWidget());
   }
 }
+
+class MystatefullWidget extends StatefulWidget {
+  const MystatefullWidget({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  _MystatefullWidgetState createState() => _MystatefullWidgetState();
+}
+
+class _MystatefullWidgetState extends State<MystatefullWidget> {
+  TextEditingController _nameEditController =TextEditingController();
+  TextEditingController _emaileditController = TextEditingController();
+
+  String myname= "Uday singh";
+  String email= "DemoMail@email.com";
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(drawer: Drawer(
+      child: ListView(
+        children: <Widget>[
+          UserAccountsDrawerHeader(
+            currentAccountPicture: Image.asset("assets/images/cs.jpg"),
+
+            accountEmail: Text(email),
+            accountName: Text(myname),
+          )
+        ],
+      ),
+    ),
+      floatingActionButton: FloatingActionButton(child: Icon(Icons.autorenew),
+        onPressed: (){
+
+          setState(() {
+            email = _emaileditController.text;
+            myname = _nameEditController.text;
+
+          });
+
+        },
+      ),
+
+      appBar: AppBar(
+        title: Text(
+          "sample Application",
+          style: TextStyle(fontSize: 28.0),
+        ),
+
+        actions: <Widget>[
+          IconButton(
+              icon: Icon(Icons.search),
+              onPressed: () {
+                showSearch(context: context, delegate: DataSearch());
+              })
+        ],
+      ),
+
+      body: NewBody1(
+          myname: myname,
+          nameEditController: _nameEditController,
+          emaileditController: _emaileditController
+      ),
+    );
+  }
+}
+
+

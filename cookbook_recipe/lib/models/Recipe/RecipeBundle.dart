@@ -27,7 +27,7 @@ List<RecipeBundle> recipeBundles = [
     description: "now we cook new  owsome dishes every minute",
     imageSrc: "assets/images/best_2020@2x.png",
     color: Color(0xFF90AF17),
-    divider_color: Color(0xFFD82D40),
+    divider_color: Color(0xFFDB001E),
 
   ),
   RecipeBundle(
@@ -38,7 +38,7 @@ List<RecipeBundle> recipeBundles = [
     description: "now we cook new  owsome dishes every minute",
     imageSrc: "assets/images/food_court@2x.png",
     color: Color(0xFFD82D40),
-    divider_color: Color(0xFFF1DE0A),
+    divider_color: Color(0xFFBDAB00),
   ),
   RecipeBundle(
     id: 3,
@@ -48,7 +48,7 @@ List<RecipeBundle> recipeBundles = [
     description: "now we cook new  owsome dishes every minute",
     imageSrc: "assets/images/cook_new@2x.png",
     color: Colors.blue,
-    divider_color: Color(0xFFD82D40),
+    divider_color: Color(0xFF7CFF02),
   ),
   RecipeBundle(
     id: 4,
@@ -58,7 +58,7 @@ List<RecipeBundle> recipeBundles = [
     description: "now we cook new  owsome dishes every minute",
     imageSrc: "assets/images/kisspng_chicken_tikka.png",
     color: Color(0xFF9A09EA),
-    divider_color: Color(0xFFAF1D0B),
+    divider_color: Color(0xFFAAAF0B),
   ),
 
 
