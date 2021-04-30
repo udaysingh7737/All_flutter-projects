@@ -1,5 +1,8 @@
 
+import 'package:cookbook_recipe/Another_auth/Auth12.dart';
+import 'package:cookbook_recipe/auth/Auth_Welcome.dart';
 import 'package:cookbook_recipe/models/home_screen.dart';
+import 'package:cookbook_recipe/models/profile/profile_screen.dart';
 import 'package:cookbook_recipe/utils/Util_Constants.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +28,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
 
 
+
     return MultiProvider(
       providers:[
 
@@ -43,6 +47,11 @@ class MyApp extends StatelessWidget {
 
       ],
         child: MaterialApp(
+          routes: {
+            "/profile": (context)=>ProfileScreen(),
+            "/login": (context)=> Another_auth12(),
+            "/home": (context)=> HomeScreen(),
+          },
           debugShowCheckedModeBanner: false,
           title: 'CookBook App',
           theme: ThemeData(
@@ -52,7 +61,9 @@ class MyApp extends StatelessWidget {
 
 
         ),
-        home: HomeScreen(),
+        home: Util_Constents.preferences.getBool("loggedin") == true
+            ? HomeScreen()
+            : Auth_WelcomeScreen(),
 
       ),
     );

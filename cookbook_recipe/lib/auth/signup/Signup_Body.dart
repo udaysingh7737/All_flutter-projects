@@ -102,7 +102,7 @@ class Signup_Body extends StatelessWidget {
                 press: () {
                   Navigator.push(
                       context, MaterialPageRoute(
-                      builder: (context) {return Sing_up12();}
+                      builder: (context) {return Sign_up12();}
                   ));
                 },
               ),

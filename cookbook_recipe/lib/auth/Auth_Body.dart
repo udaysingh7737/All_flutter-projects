@@ -1,8 +1,7 @@
 import 'package:cookbook_recipe/Another_auth/Auth12.dart';
-import 'package:cookbook_recipe/Another_auth/SIng_Up12.dart';
+import 'package:cookbook_recipe/Another_auth/Sing_Up12.dart';
 import 'package:cookbook_recipe/auth/background.dart';
 import 'package:cookbook_recipe/constants.dart';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -25,9 +24,10 @@ class Auth_Body extends StatelessWidget {
                   fontSize: 33,fontFamily: "cursive",fontWeight: FontWeight.bold
             ),
             ),
-            SizedBox(height: size.height*0.03,),
-            SvgPicture.asset("assets/icons/chat.svg",
+            SizedBox(height: size.height*0.02,),
+            SvgPicture.asset("assets/icons/Welcome-cuate.svg",
             height: size.height * 0.45,),
+            SizedBox(height: size.height*0.03,),
 
             RoundedButton(
               text: "LOG IN",
@@ -47,7 +47,7 @@ class Auth_Body extends StatelessWidget {
               textColor: Colors.black87,
               press: (){
                 Navigator.push(context, MaterialPageRoute(builder: (context){
-                  return Sing_up12();
+                  return Sign_up12();
                 }
                 )
                 );

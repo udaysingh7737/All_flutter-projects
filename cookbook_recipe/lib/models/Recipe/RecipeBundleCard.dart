@@ -67,9 +67,9 @@ class RecipeBundleCard extends StatelessWidget {
               ),
             )
             ),
-            SizedBox(width: defaulSize * 0.5,),
 
-            AspectRatio(aspectRatio:0.8,
+
+            AspectRatio(aspectRatio:0.85,
                 child:Image.asset(recipeBundle.imageSrc,
                   fit: BoxFit.cover,
                   alignment: Alignment.centerLeft,)
@@ -86,7 +86,7 @@ class RecipeBundleCard extends StatelessWidget {
         SizedBox(width: defaulSize),
         Text(
           text,
-          style: TextStyle(color: Colors.white70),
+          style: TextStyle(color: Colors.yellow[200]),
         ),
 
       ],

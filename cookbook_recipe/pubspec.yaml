@@ -41,6 +41,7 @@ dependencies:
 
 
 
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -63,6 +64,7 @@ flutter:
      - assets/icons/menu.svg
      - assets/icons/search1.svg
      - assets/icons/
+     - assets/images/Cooking.gif
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

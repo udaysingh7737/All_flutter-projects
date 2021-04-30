@@ -8,7 +8,7 @@ class Auth_WelcomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      bottomNavigationBar: MyBottomNavBar(),
+
 
       body: Auth_Body(),
     );
