@@ -2,6 +2,7 @@
 import 'package:cookbook_recipe/models/Recipe/RecipeBundle.dart';
 import 'package:cookbook_recipe/models/Recipe/RecipeBundleCard.dart';
 import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:cookbook_recipe/size_config.dart';
 
@@ -18,15 +19,16 @@ class Body extends StatelessWidget {
 
              Expanded(
                child: Padding(
-                 padding: EdgeInsets.symmetric(horizontal: SizeConfig.defaultSize * 2),
-                 child: GridView.builder(
+                 padding: EdgeInsets.symmetric(horizontal: SizeConfig.defaultSize * 1.5,),
+                 child: GridView.builder(physics: BouncingScrollPhysics(),
+                   clipBehavior: Clip.hardEdge,
                  itemCount: recipeBundles.length,
                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                  crossAxisCount: SizeConfig.orientation == Orientation.landscape ? 2:1,
-                 crossAxisSpacing: SizeConfig.orientation == Orientation.landscape ? SizeConfig.defaultSize *2 : 0,
-                 mainAxisSpacing: 20,
-                 childAspectRatio: 1.65
-              ),
+                 crossAxisSpacing: SizeConfig.orientation == Orientation.landscape ? SizeConfig.defaultSize *3 : 1,
+                 mainAxisSpacing: 15,
+                 childAspectRatio: 1.7,
+                  ),
                    itemBuilder: (context, index) => RecipeBundleCard(recipeBundle: recipeBundles[index],
                    press: () {},
                    ),

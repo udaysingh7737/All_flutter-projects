@@ -38,7 +38,8 @@ class MyBottomNavBar extends StatelessWidget {
                     // maybe destinationChacker is not needed in future because then all of our nav items have destination
                     // But Now if we click those which dont have destination then it shows error
                     // And this fix this problem
-                      Navigator.push(context,MaterialPageRoute(builder: (context) => navItems.items[index].destination),
+                      Navigator.pushReplacement(context,
+                        MaterialPageRoute(builder: (context) => navItems.items[index].destination,),
                       );
 
                   },

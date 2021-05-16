@@ -1,40 +1,34 @@
-
-import 'package:cookbook_recipe/Another_auth/Auth12.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cookbook_recipe/AuthServices/AuthServices.dart';
+import 'package:cookbook_recipe/AuthServices/ShowDialogAlert.dart';
 import 'package:cookbook_recipe/auth/Auth_Body.dart';
-import 'package:cookbook_recipe/auth/Screen_Function/screenfunction.dart';
-
+import 'package:cookbook_recipe/auth/componets/screenfunction.dart';
+import 'package:cookbook_recipe/auth/login/logIn.dart';
 import 'package:cookbook_recipe/auth/signup/background.dart';
 import 'package:cookbook_recipe/constants.dart';
-import 'package:cookbook_recipe/models/profile/profile_screen.dart';
 import 'package:cookbook_recipe/utils/Util_Constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:form_field_validator/form_field_validator.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
-class Sign_up12 extends StatefulWidget {
+
+class SignInPage extends StatefulWidget {
   @override
-  _Sign_up12State createState() => _Sign_up12State();
+  _SignInPageState createState() => _SignInPageState();
 }
 
-class _Sign_up12State extends State<Sign_up12> {
+class _SignInPageState extends State<SignInPage> {
 
+
+  final AuthServices _authServices = AuthServices();
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   GlobalKey<FormState> globalKey=GlobalKey<FormState>();
-
-  void validate(){
-    if(globalKey.currentState.validate()){
-      print("Validate");
-    }
-    else{
-      print("Not validate");
-    }
-  }
-  Future<void> _showMyDialog() async {
+  //Registration Alert Dialog
+  Future<void> showSignInDialog() async {
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!
@@ -54,7 +48,11 @@ class _Sign_up12State extends State<Sign_up12> {
               child: Text('Login Please'),
               onPressed: () {
                 Util_Constents.preferences.setBool("loggedin", true);
-                Navigator.pushNamedAndRemoveUntil(context, "/login",(Route<dynamic> route) => false,);
+                Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  "/login",
+                      (Route<dynamic> route) => false,
+                );
               },
             ),
           ],
@@ -62,8 +60,8 @@ class _Sign_up12State extends State<Sign_up12> {
       },
     );
   }
-
-  Future<void> _showMyDialog_Google_SignIn() async {
+  // google login Alert Dialog
+  Future<void> showDialogGoogleSignIn() async {
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!
@@ -77,7 +75,7 @@ class _Sign_up12State extends State<Sign_up12> {
               children: <Widget>[
                 Container(height: 40,
                     decoration:
-                BoxDecoration(color: Colors.green,borderRadius: BorderRadius.circular(26)),
+                    BoxDecoration(color: Colors.green,borderRadius: BorderRadius.circular(26)),
                     child: Center(child: Text('You are Login With Google',style: TextStyle(color: Colors.white,fontSize: 15),))),
                 SizedBox(height: 15,),
                 Image.asset("assets/images/Avtar.png", height: 150,)
@@ -89,7 +87,7 @@ class _Sign_up12State extends State<Sign_up12> {
               child: Text('Continue'),
               onPressed: () {
                 Util_Constents.preferences.setBool("loggedin", true);
-                Navigator.pushNamedAndRemoveUntil(context, "/profile",(Route<dynamic> route) => false,);
+                Navigator.pushNamedAndRemoveUntil(context, "/home",(Route<dynamic> route) => false,);
               },
             ),
           ],
@@ -97,6 +95,17 @@ class _Sign_up12State extends State<Sign_up12> {
       },
     );
   }
+
+  void validate(){
+    if(globalKey.currentState.validate()){
+      print("Validate");
+    }
+    else{
+      print("Not validate");
+    }
+  }
+
+
 
 
   final emailValidator = MultiValidator([
@@ -138,7 +147,7 @@ class _Sign_up12State extends State<Sign_up12> {
                     height: size.height *0.37,
                   ),
 
-                  TextFieldContainer_Signup(child: TextFormField(
+                  TextFieldContainer(child: TextFormField(
                     controller: _emailController,
                     maxLines: 1,
                     keyboardType: TextInputType.emailAddress,
@@ -152,7 +161,7 @@ class _Sign_up12State extends State<Sign_up12> {
                   ),
                   ),
 
-                  TextFieldContainer_Signup(child: TextFormField(
+                  TextFieldContainer(child: TextFormField(
                     controller: _passwordController,
                     maxLines: 1,
                     obscureText: true,
@@ -171,23 +180,63 @@ class _Sign_up12State extends State<Sign_up12> {
                   ),
                   ),
 
-                  RoundedButton(text: "Login",
+                  RoundedButton(text: "Create",
                     color: kPrimaryColor2,
-                    press: () async{
+                    press: (){
 
-                      if(globalKey.currentState.validate()){
+
+
+
+                      if(globalKey.currentState.validate()) {
                         print("Validate");
-                          await _firebaseAuth.createUserWithEmailAndPassword(
+
+                        try {
+                          _firebaseAuth.createUserWithEmailAndPassword(
                             email: _emailController.text,
-                            password: _passwordController.text).then((value) {
-                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Profile Created Successfully !!"),));
-                            _showMyDialog();
-                            }
+                            password: _passwordController.text,
+                          ).then((value){
+                            FirebaseFirestore.instance.collection('userData').doc(value.user.uid).set(
+                              {"email": value.user.email}
                             );
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Profile Created Successfully !!"),));
+                          });
+
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content: Text("Profile Created Successfully !!"),));
+                          showSignInDialog();
+
+
+                        } on FirebaseAuthException catch (e) {
+                          if (e.code == 'weak-password') {
+                            SnackBar(content: Text(
+                              'The password provided is too weak.',
+                              style: TextStyle(color: Colors.white),),
+                              backgroundColor: Colors.redAccent,
+                            );
+
+                            print('The password provided is too weak.');
+                          } else if (e.code == 'email-already-in-use') {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text(
+                                  'The account already exists for that email.',
+                                  style: TextStyle(color: Colors.black),),
+                                  backgroundColor: Colors.red,
+                                ));
+                            print('The account already exists for that email.');
+                          }
+                        } catch (e) {
+                          SnackBar(content: Text(e.message,
+                            style: TextStyle(color: Colors.white),),
+                            backgroundColor: Colors.redAccent,
+                          );
+                          print(e);
                         }
+                      }
                         else{
                           print("not validated");
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text("Unable Create profile...",style: TextStyle(color: Colors.white),),
+                                backgroundColor: Colors.red[400],
+                              ));
 
                       }
 
@@ -205,7 +254,7 @@ class _Sign_up12State extends State<Sign_up12> {
                           onTap: (){
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (context){
-                                  return Another_auth12();
+                                  return LogInPage();
                                 }));
                           },
                           child: Text("Log In", style: TextStyle(fontWeight: FontWeight.bold, color: Color(
@@ -226,12 +275,12 @@ class _Sign_up12State extends State<Sign_up12> {
 
                         SocialIcon( iconSrc: "assets/icons/google-plus.svg",
                           press: ()async{
-                            final GoogleSignInAccount googleUser= await GoogleSignIn().signIn();
-                            final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
-                            final GoogleAuthCredential credential =
-                            GoogleAuthProvider.credential(accessToken: googleAuth.accessToken,idToken: googleAuth.idToken);
-
-                            await FirebaseAuth.instance.signInWithCredential(credential).then((value) => _showMyDialog_Google_SignIn());
+                            dynamic result = await _authServices.signinGoogleAuth();
+                            if(result == 0){
+                              showDialogGoogleSignIn();
+                            }else{
+                              print(result);
+                            }
                           },
                         ),
                       ],
@@ -253,26 +302,4 @@ class _Sign_up12State extends State<Sign_up12> {
 
 
 
-class TextFieldContainer_Signup extends StatelessWidget {
-  //final color,text;
-  final Widget child;
-  const TextFieldContainer_Signup({
-    Key key,
-    this.child,
-  }) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 10),
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-      width: size.width * 0.8,
-      height: size.height * 0.07,
-      decoration: BoxDecoration(color: Color(0xFFEFC4FF),
-        borderRadius: BorderRadius.circular(29),
-      ),
-      child: child,
-    );
-  }
-}

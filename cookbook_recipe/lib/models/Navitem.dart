@@ -1,5 +1,5 @@
 
-import 'package:cookbook_recipe/auth/Auth_Welcome.dart';
+import 'package:cookbook_recipe/UserProfile/User_Profile_Screen.dart';
 import 'package:cookbook_recipe/models/home_screen.dart';
 import 'package:cookbook_recipe/models/profile/profile_screen.dart';
 
@@ -40,7 +40,7 @@ class NavItems extends ChangeNotifier {
     NavItem(
       id:2,
       icon: "assets/icons/user_icon.svg",
-      destination: Auth_WelcomeScreen(),
+      destination: UserProfilePage(),
     ),
 
     NavItem(

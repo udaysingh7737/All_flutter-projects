@@ -1,3 +1,4 @@
+import 'package:cookbook_recipe/models/Mydrawer.dart';
 import 'package:cookbook_recipe/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -31,10 +32,6 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         );
       }
-      else if(cusIcon == Icons.cancel_sharp){
-        cusIcon = Icon(Icons.search);
-        cusSearchBar = Image.asset('assets/images/prasadam_logo1.jpg');
-      }
       else{
         cusIcon = Icon(Icons.search);
         cusSearchBar = Image.asset('assets/images/prasadam_logo1.jpg');
@@ -62,12 +59,12 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: buildAppBar(),
       body: Padding(
-        padding: EdgeInsets.only(top:SizeConfig.defaultSize *1.0),
+        padding: EdgeInsets.only(top:SizeConfig.defaultSize *0.3, bottom: 3),
         child: Body(),
 
       ),
       bottomNavigationBar: MyBottomNavBar(),
-      drawer: new Drawer(),
+      drawer: myDrawer(),
     );
   }
 
@@ -75,17 +72,19 @@ class _HomeScreenState extends State<HomeScreen> {
 Size size =MediaQuery.of(context).size;
     return AppBar(
       toolbarHeight: 65,
-      leading: IconButton(
+      leading: Builder(builder: (context)=>
+      IconButton(
           icon: SvgPicture.asset('assets/icons/menu.svg'),
           splashColor: Colors.white38,
           onPressed:()=>
             Scaffold.of(context).openDrawer(),
 
-      ),
+      )),
       centerTitle: true,
-      title: cusSearchBar,
+      title: cusSearchBar ,
 
       actions: <Widget>[
+
         Padding(
           padding: const EdgeInsets.only(bottom: 2.0,top: 8),
           child: AnimatedContainer(duration: Duration(milliseconds: 250),

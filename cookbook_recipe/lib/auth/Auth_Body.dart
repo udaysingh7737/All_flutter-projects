@@ -1,6 +1,7 @@
-import 'package:cookbook_recipe/Another_auth/Auth12.dart';
-import 'package:cookbook_recipe/Another_auth/Sing_Up12.dart';
 import 'package:cookbook_recipe/auth/background.dart';
+import 'package:cookbook_recipe/auth/componets/screenfunction.dart';
+import 'package:cookbook_recipe/auth/login/logIn.dart';
+import 'package:cookbook_recipe/auth/signup/signIn.dart';
 import 'package:cookbook_recipe/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -21,11 +22,11 @@ class Auth_Body extends StatelessWidget {
 
             Text("Welcome to प्रसादम् ! ",
               style: TextStyle(
-                  fontSize: 33,fontFamily: "cursive",fontWeight: FontWeight.bold
+                  fontSize: size.height*size.width* 00.0001,fontFamily: "cursive",fontWeight: FontWeight.w800
             ),
             ),
             SizedBox(height: size.height*0.02,),
-            SvgPicture.asset("assets/icons/Welcome-cuate.svg",
+            Image(image: AssetImage("assets/images/Cooking.gif"),
             height: size.height * 0.45,),
             SizedBox(height: size.height*0.03,),
 
@@ -34,20 +35,21 @@ class Auth_Body extends StatelessWidget {
               color: kPrimaryColor2,
               press: (){
                 Navigator.push(context, MaterialPageRoute(builder: (context){
-                  return Another_auth12();
+                  return LogInPage();
                 }
                 )
                 );
               },
             ),
-            SizedBox(height: size.height * 0.025,),
+            OrDivider(),
+
             RoundedButton(
               text: "SIGN UP",
               color: Color(0xFFDEB0E3),
               textColor: Colors.black87,
               press: (){
                 Navigator.push(context, MaterialPageRoute(builder: (context){
-                  return Sign_up12();
+                  return SignInPage();
                 }
                 )
                 );

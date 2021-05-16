@@ -1,6 +1,7 @@
 
-import 'package:cookbook_recipe/Another_auth/Auth12.dart';
+import 'package:cookbook_recipe/UserProfile/EditProfile.dart';
 import 'package:cookbook_recipe/auth/Auth_Welcome.dart';
+import 'package:cookbook_recipe/auth/login/logIn.dart';
 import 'package:cookbook_recipe/models/home_screen.dart';
 import 'package:cookbook_recipe/models/profile/profile_screen.dart';
 import 'package:cookbook_recipe/utils/Util_Constants.dart';
@@ -49,14 +50,16 @@ class MyApp extends StatelessWidget {
         child: MaterialApp(
           routes: {
             "/profile": (context)=>ProfileScreen(),
-            "/login": (context)=> Another_auth12(),
+            "/login": (context)=> LogInPage(),
             "/home": (context)=> HomeScreen(),
+            "/editProfile" : (context) => EditProfilePage()
           },
           debugShowCheckedModeBanner: false,
           title: 'CookBook App',
           theme: ThemeData(
             appBarTheme: AppBarTheme(color: Colors.white, elevation: 0),
             backgroundColor: Colors.white60,
+            dividerColor: Colors.black,
             visualDensity:  VisualDensity.adaptivePlatformDensity,
 
 

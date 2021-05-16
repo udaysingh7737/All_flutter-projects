@@ -2,7 +2,6 @@ import 'package:cookbook_recipe/models/Recipe/Recipe.dart';
 import 'package:cookbook_recipe/models/Recipe/RecipeBundle.dart';
 import 'package:flutter/material.dart';
 import 'package:cookbook_recipe/size_config.dart';
-
 import 'package:flutter_svg/svg.dart';
 
 
@@ -17,7 +16,8 @@ class RecipeBundleCard extends StatelessWidget {
     return GestureDetector(
       onTap: (){Navigator.push(context,
           MaterialPageRoute(builder: (context) => Recipe_Detail())
-      );},
+      );
+      },
       child: Container(
         decoration: BoxDecoration(
           color: recipeBundle.color,
@@ -40,11 +40,13 @@ class RecipeBundleCard extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: defaulSize * 0.5,),
-                  Text(recipeBundle.description,
-                    style: TextStyle(color: Colors.white60,
-                      fontSize: defaulSize * 1.5,),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
+                  FittedBox(
+                    child: Text(recipeBundle.description,
+                      style: TextStyle(color: Colors.white60,
+                        fontSize: defaulSize * 1.5,),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
                   Divider(color: recipeBundle.divider_color,),
 

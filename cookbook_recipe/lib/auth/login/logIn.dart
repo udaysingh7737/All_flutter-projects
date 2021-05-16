@@ -1,45 +1,55 @@
-
-import 'package:cookbook_recipe/Another_auth/Sing_Up12.dart';
+import 'package:cookbook_recipe/AuthServices/AuthServices.dart';
 import 'package:cookbook_recipe/auth/Auth_Body.dart';
-import 'package:cookbook_recipe/auth/Screen_Function/screenfunction.dart';
+import 'package:cookbook_recipe/auth/componets/screenfunction.dart';
 import 'package:cookbook_recipe/auth/login/background.dart';
+import 'package:cookbook_recipe/auth/reset_password.dart';
+import 'package:cookbook_recipe/auth/signup/signIn.dart';
 import 'package:cookbook_recipe/constants.dart';
-import 'package:cookbook_recipe/models/profile/profile_screen.dart';
 import 'package:cookbook_recipe/utils/Util_Constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:form_field_validator/form_field_validator.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
 
-class Another_auth12 extends StatefulWidget {
+class LogInPage extends StatefulWidget {
   @override
-  _Another_auth12State createState() => _Another_auth12State();
+  _LogInPageState createState() => _LogInPageState();
 }
 
-class _Another_auth12State extends State<Another_auth12> {
+class _LogInPageState extends State<LogInPage> {
 
+  final AuthServices _authServices = AuthServices();
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
   GlobalKey<FormState> globalFormKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-
-
-  Future<void> _showMyDialog() async {
+  // login alert Dialog
+  Future<void> showLoginDialog() async {
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Container(color: Colors.lime[100],
-              child: Text('WELCOME Back To CookBook',style: TextStyle(fontWeight: FontWeight.w600,color: Colors.green),)),
+          title: Container(
+              color: Colors.lime[100],
+              child: Text(
+                'WELCOME Back To CookBook',
+                style:
+                TextStyle(fontWeight: FontWeight.w600, color: Colors.green),
+              )),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text('You are Login Successfully',style: TextStyle(color: Colors.purpleAccent),),
-                Image.asset("assets/images/Avtar.png", height: 150,)
+                Text(
+                  'You are Login Successfully',
+                  style: TextStyle(color: Colors.purpleAccent),
+                ),
+                Image.asset(
+                  "assets/images/Avtar.png",
+                  height: 150,
+                )
               ],
             ),
           ),
@@ -48,7 +58,11 @@ class _Another_auth12State extends State<Another_auth12> {
               child: Text('Continue'),
               onPressed: () {
                 Util_Constents.preferences.setBool("loggedin", true);
-                Navigator.pushNamedAndRemoveUntil(context, "/profile",(Route<dynamic> route) => false,);
+                Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  "/profile",
+                      (Route<dynamic> route) => false,
+                );
                 /*
                 Navigator.push(
                     context, MaterialPageRoute(
@@ -64,8 +78,8 @@ class _Another_auth12State extends State<Another_auth12> {
       },
     );
   }
-
-  Future<void> _showMyDialog_Google_SignIn() async {
+  // google login Alert Dialog
+  Future<void> showDialogGoogleSignIn() async {
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!
@@ -91,7 +105,7 @@ class _Another_auth12State extends State<Another_auth12> {
               child: Text('Continue'),
               onPressed: () {
                 Util_Constents.preferences.setBool("loggedin", true);
-                Navigator.pushNamedAndRemoveUntil(context, "/profile",(Route<dynamic> route) => false,);
+                Navigator.pushNamedAndRemoveUntil(context, "/home",(Route<dynamic> route) => false,);
               },
             ),
           ],
@@ -101,10 +115,12 @@ class _Another_auth12State extends State<Another_auth12> {
   }
 
 
+
+
   final emailValidator = MultiValidator([
     RequiredValidator(errorText: 'Email is required'),
     PatternValidator(r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$',
-        errorText: 'Email must have correct Formet')
+        errorText: 'Email must have correct Format')
   ]);
 
   final passwordValidator = MultiValidator([
@@ -140,12 +156,12 @@ class _Another_auth12State extends State<Another_auth12> {
              */
 
               Text("Login To प्रसादम् ! ",
-                style: TextStyle(fontSize: 38,
+                style: TextStyle(fontSize: 32,
                     fontFamily: "cursive",
                     fontWeight: FontWeight.bold
                 ),
               ),
-              SizedBox(height: size.height* 0.01,),
+              SizedBox(height: size.height* 0.001,),
 
               SvgPicture.asset("assets/icons/Login_new1.svg",
                 height: size.height *0.37,
@@ -167,51 +183,65 @@ class _Another_auth12State extends State<Another_auth12> {
               ),
 
               // Text field for password
-              TextFieldContainer(child: TextFormField(
-                controller: _passwordController,
-                validator:passwordValidator,
+              TextFieldContainer(
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 8.0,top: 15.0),
+                  child: TextFormField(
 
+                  controller: _passwordController,
+                  validator:passwordValidator,
 
-                maxLines: 1,
-                keyboardType: TextInputType.text,
-                onChanged: (value){},
-                obscureText: true,
-                decoration: InputDecoration(
-                  icon: Icon(Icons.vpn_key,color: Color(0xFFA336F8),
+                  maxLines: 1,
+                  keyboardType: TextInputType.text,
+                  onChanged: (value){},
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    icon: Icon(Icons.vpn_key,color: Color(0xFFA336F8),
+                    ),
+                    floatingLabelBehavior: FloatingLabelBehavior.never,
+                    suffixIcon: Icon(Icons.visibility, color: Color(0xFFA336F8),
+                    ),
+                    hintText: "Password",
+                    border: InputBorder.none,
                   ),
-                  floatingLabelBehavior: FloatingLabelBehavior.never,
-                  suffixIcon: Icon(Icons.visibility, color: Color(0xFFA336F8),
-                  ),
-
-                  hintText: "Password",
-                  border: InputBorder.none,
-                ),
               ),
+                ),
               ),
 
               RoundedButton(text: "Login",
                 color: kPrimaryColor2,
                 press: () async{
                     if (globalFormKey.currentState.validate()){
-
-                    }
-
-                    if(globalFormKey.currentState.validate()){
                       print("Validate");
+                      try {
+                        UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+                            email: _emailController.text,
+                            password: _passwordController.text,
 
-                      await _firebaseAuth.signInWithEmailAndPassword(
-                          email: _emailController.text, password: _passwordController.text).then(
-                            (value) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(content: Text("Processing Data...",style: TextStyle(color: Colors.white),),
-                                  backgroundColor: Colors.blueGrey,
-                                  ));
-                              _showMyDialog();
-                            }
-                            );
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Processing Data..."),));
-                    }
-                    else{
+                        );
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text("Processing please wait!!"),));
+                        showLoginDialog();
+
+                      } on FirebaseAuthException catch (e) {
+                        if (e.code == 'user-not-found') {
+
+                          print('No user found for that email.');
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text("Wrong Email Address. Try Again!!!",style: TextStyle(color: Colors.white),),
+                                backgroundColor: Colors.red[400],
+                              ));
+
+                        } else if (e.code == 'wrong-password') {
+
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text("Wrong Password. Try Again!!!",style: TextStyle(color: Colors.white),),
+                                backgroundColor: Colors.red[400],
+                              ));
+                          print('Wrong password provided for that user.');
+                        }
+                      }
+                    }else{
                       print("not validate");
                       ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(content: Text("Unable to Login...",style: TextStyle(color: Colors.white),),
@@ -233,14 +263,25 @@ class _Another_auth12State extends State<Another_auth12> {
                       onTap: (){
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context){
-                              return Sign_up12();
+                              return SignInPage();
                             }));
                       },
                       child: Text("Sign Up", style: TextStyle(fontWeight: FontWeight.bold, color: Color(
                           0xFF057D11),
                       decoration: TextDecoration.underline),)
                   ),
+
+
                 ],
+              ),
+              SizedBox(height: size.height*0.02,),
+
+              InkWell(onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context)=> ResetPassword()));
+              },
+                child: Text("Forget Password ?",
+                  style: TextStyle(color: Color(0xFF36A4F8),decoration: TextDecoration.underline,),
+                ),
               ),
               OrDivider(),
 
@@ -252,17 +293,18 @@ class _Another_auth12State extends State<Another_auth12> {
 
                     SocialIcon( iconSrc: "assets/icons/google-plus.svg",
                       press: ()async{
-                      final GoogleSignInAccount googleUser= await GoogleSignIn().signIn();
-                      final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
-                      final GoogleAuthCredential credential =
-                      GoogleAuthProvider.credential(accessToken: googleAuth.accessToken,idToken: googleAuth.idToken);
-                      await FirebaseAuth.instance.signInWithCredential(credential).then((value) => _showMyDialog_Google_SignIn());
+                      dynamic result = await _authServices.signinGoogleAuth();
+                      if(result == 0){
+                        showDialogGoogleSignIn();
+                      }else{
+                        print(result);
+                      }
                       },
                     ),
                   ],
                 ),
               ),
-              SizedBox(height: size.height*0.03,),
+              SizedBox(height: size.height*0.01,),
             ],
           ),
         ),
@@ -274,29 +316,7 @@ class _Another_auth12State extends State<Another_auth12> {
 
 
 
-class TextFieldContainer extends StatelessWidget {
-  //final color,text;
-  final Widget child;
-  const TextFieldContainer({
-    Key key,
-    this.child,
-  }) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 10),
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-      width: size.width * 0.8,
-      height: size.height * 0.08,
-      decoration: BoxDecoration(color: Color(0xFFDBC4FF),
-        borderRadius: BorderRadius.circular(29),
-      ),
-      child: child,
-    );
-  }
-}
 
 
 
