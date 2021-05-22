@@ -20,8 +20,9 @@ class SignInPage extends StatefulWidget {
 
 class _SignInPageState extends State<SignInPage> {
 
-
+  // authServices instance
   final AuthServices _authServices = AuthServices();
+  //firebase Auth instance
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
   final TextEditingController _emailController = TextEditingController();
@@ -34,7 +35,12 @@ class _SignInPageState extends State<SignInPage> {
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('WELCOME To CookBook Family'),
+          title: Container(height: 50,
+              decoration: BoxDecoration(color: Colors.green,borderRadius: BorderRadius.circular(32)),
+              child: Padding(
+                padding: const EdgeInsets.only(left: 10.0,right: 5),
+                child: Text('WELCOME To CookBook Family'),
+              )),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
@@ -47,12 +53,8 @@ class _SignInPageState extends State<SignInPage> {
             TextButton(
               child: Text('Login Please'),
               onPressed: () {
-                Util_Constents.preferences.setBool("loggedin", true);
                 Navigator.pushNamedAndRemoveUntil(
-                  context,
-                  "/login",
-                      (Route<dynamic> route) => false,
-                );
+                  context,"/login",(Route<dynamic> route) => false,);
               },
             ),
           ],
@@ -182,53 +184,39 @@ class _SignInPageState extends State<SignInPage> {
 
                   RoundedButton(text: "Create",
                     color: kPrimaryColor2,
-                    press: (){
+                    press: ()async{
 
 
-
-
-                      if(globalKey.currentState.validate()) {
+                      if(globalKey.currentState.validate()){
                         print("Validate");
 
-                        try {
-                          _firebaseAuth.createUserWithEmailAndPassword(
-                            email: _emailController.text,
-                            password: _passwordController.text,
-                          ).then((value){
-                            FirebaseFirestore.instance.collection('userData').doc(value.user.uid).set(
-                              {"email": value.user.email}
-                            );
-                          });
+                        dynamic result = await _authServices.signInEmailPassword(
+                            _emailController.text,
+                            _passwordController.text
+                        );
 
+                        if(result == 0){
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                             content: Text("Profile Created Successfully !!"),));
                           showSignInDialog();
+                          print('User LogIned in');
 
+                        }else if(result == 'weak-password'){
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text(
+                                'The password provided is too weak.',
+                                style: TextStyle(color: Colors.black),),
+                                backgroundColor: Colors.red,
+                              ));
 
-                        } on FirebaseAuthException catch (e) {
-                          if (e.code == 'weak-password') {
-                            SnackBar(content: Text(
-                              'The password provided is too weak.',
-                              style: TextStyle(color: Colors.white),),
-                              backgroundColor: Colors.redAccent,
-                            );
-
-                            print('The password provided is too weak.');
-                          } else if (e.code == 'email-already-in-use') {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text(
-                                  'The account already exists for that email.',
-                                  style: TextStyle(color: Colors.black),),
-                                  backgroundColor: Colors.red,
-                                ));
-                            print('The account already exists for that email.');
-                          }
-                        } catch (e) {
-                          SnackBar(content: Text(e.message,
-                            style: TextStyle(color: Colors.white),),
-                            backgroundColor: Colors.redAccent,
-                          );
-                          print(e);
+                        }else if(result == 'email-already-in-use'){
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text(
+                                'The account already exists for that email.',
+                                style: TextStyle(color: Colors.black),),
+                                backgroundColor: Colors.red,
+                              ));
+                          print('The account already exists for that email.');
                         }
                       }
                         else{
@@ -275,7 +263,7 @@ class _SignInPageState extends State<SignInPage> {
 
                         SocialIcon( iconSrc: "assets/icons/google-plus.svg",
                           press: ()async{
-                            dynamic result = await _authServices.signinGoogleAuth();
+                            dynamic result = await _authServices.signInGoogleAuth();
                             if(result == 0){
                               showDialogGoogleSignIn();
                             }else{

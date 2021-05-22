@@ -56,7 +56,7 @@ class Auth_Body extends StatelessWidget {
               },
 
             ),
-            SvgPicture.asset("assets/images/decoration_line.png"),
+
 
 
 

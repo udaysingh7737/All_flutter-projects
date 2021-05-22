@@ -213,33 +213,23 @@ class _LogInPageState extends State<LogInPage> {
                 press: () async{
                     if (globalFormKey.currentState.validate()){
                       print("Validate");
-                      try {
-                        UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-                            email: _emailController.text,
-                            password: _passwordController.text,
-
-                        );
+                      dynamic result = await _authServices.logInEmailPassword(_emailController.text, _passwordController.text);
+                      if(result == 0){
                         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                           content: Text("Processing please wait!!"),));
                         showLoginDialog();
-
-                      } on FirebaseAuthException catch (e) {
-                        if (e.code == 'user-not-found') {
-
-                          print('No user found for that email.');
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text("Wrong Email Address. Try Again!!!",style: TextStyle(color: Colors.white),),
-                                backgroundColor: Colors.red[400],
-                              ));
-
-                        } else if (e.code == 'wrong-password') {
-
+                      }else if(result== 'user-not-found'){
+                        print('No user found for that email.');
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text("Wrong Email Address. Try Again!!!",style: TextStyle(color: Colors.white),),
+                              backgroundColor: Colors.red[400],
+                            ));
+                      }else if(result== 'wrong-password') {
                           ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(content: Text("Wrong Password. Try Again!!!",style: TextStyle(color: Colors.white),),
                                 backgroundColor: Colors.red[400],
                               ));
                           print('Wrong password provided for that user.');
-                        }
                       }
                     }else{
                       print("not validate");
@@ -293,7 +283,7 @@ class _LogInPageState extends State<LogInPage> {
 
                     SocialIcon( iconSrc: "assets/icons/google-plus.svg",
                       press: ()async{
-                      dynamic result = await _authServices.signinGoogleAuth();
+                      dynamic result = await _authServices.signInGoogleAuth();
                       if(result == 0){
                         showDialogGoogleSignIn();
                       }else{
